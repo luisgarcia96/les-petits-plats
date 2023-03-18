@@ -1,0 +1,13 @@
+/* General styling for the page */
+body {
+    padding-top: 2rem;
+    height: 100vh;
+}
+
+.header {
+    text-align: center;
+}
+
+.main_title {
+    color: #D04F4F;
+}
