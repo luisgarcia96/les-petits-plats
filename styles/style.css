@@ -14,6 +14,11 @@ h1, h2, h3, p {
     margin: 0;
 }
 
+h3 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
 /* Header */
 .header {
     text-align: center;
@@ -29,7 +34,7 @@ h1, h2, h3, p {
 
 /* Search bar*/
 .search {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .search-bar {
@@ -111,6 +116,7 @@ h1, h2, h3, p {
     flex-direction: column;
     margin-right: 1.5rem;
     border-radius: 0.5rem;
+    margin-bottom: auto;
 }
 
 .button {
@@ -242,4 +248,88 @@ h1, h2, h3, p {
 }
 .utensiles-button.active:hover {
     background-color: #ED6454;
+}
+
+/* Recipes section */
+.recipes {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Recipes cards */
+.recipe-card {
+    height: 24rem;
+    width: 24rem;
+    border-radius: 0.5rem;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card-top {
+    height: 50%;
+    background-color: #C7BEBE;
+}
+
+.card-bottom {
+    height: 50%;
+    background-color: #E7E7E7;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.card-bottom-first {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.recipe-card-title {
+    flex-grow: 1;
+}
+
+.recipe-card-time {
+    display: flex;
+    align-items: center;
+}
+.recipe-card-time i{
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.card-bottom-second {
+    display: flex;
+    font-size: 0.75rem;
+    line-height: 125%;
+}
+
+.recipe-card-ingredients {
+    width: 50%;
+}
+
+.recipe-card-instructions {
+    width: 50%;
+}
+
+.recipe-card-instructions p{
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.card-list-item {
+    display: flex;
+}
+
+.card-list-item-title {
+    font-weight: 700;
 }
