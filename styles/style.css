@@ -115,7 +115,7 @@ h1, h2, h3, p {
 
 .button {
     height: 4rem;
-    width: 10rem;
+    min-width: 10rem;
     border-radius: 0.5rem;
     display: flex;
     justify-content: center;
@@ -124,6 +124,18 @@ h1, h2, h3, p {
     padding: 0 1rem;
     color: #fff;
     font-weight: 500;
+}
+
+.button.active .dropdown-input{
+    display: flex;
+}
+
+.button.active .text{
+    display: none;
+}
+
+.button.active + .list-container {
+    display: flex;
 }
 
 .button .text {
@@ -135,6 +147,11 @@ h1, h2, h3, p {
 .button .dropdown-input {
     display: none;
     flex-grow: 1;
+    margin-right: 1rem;
+    outline: none;
+    border: none;
+    border-radius: 0.25rem;
+    color: #fff;
 }
 
 .button .icon-container .fa-chevron-up {
@@ -149,7 +166,7 @@ h1, h2, h3, p {
 }
 
 .dropdown-list {
-    padding: 0.5rem;
+    padding: 0 1rem;
     margin: 0;
     list-style-type: none;
     display: flex;
@@ -191,11 +208,20 @@ h1, h2, h3, p {
 .ingredients-select,  .ingredients-button{
     background-color: #3282F7;
 }
+.ingredients-button .dropdown-input {
+    background-color: #649aeb;
+}
 
 .appliances-select,  .appliances-button{
     background-color: #68D9A4;
 }
+.appliances-button .dropdown-input {
+    background-color: #39c584;
+}
 
 .utensiles-select,  .utensiles-button{
     background-color: #ED6454;
+}
+.utensiles-button .dropdown-input {
+    background-color: #e67e72;
 }

@@ -5,5 +5,6 @@ const buttons = document.querySelectorAll('.button');
 buttons.forEach((btn) => {
     btn.addEventListener('click', function() {
         this.classList.toggle('active');
+        this.children[1].focus();
     })
 });
