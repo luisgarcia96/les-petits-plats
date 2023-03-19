@@ -211,6 +211,12 @@ h1, h2, h3, p {
 .ingredients-button .dropdown-input {
     background-color: #649aeb;
 }
+.ingredients-button:hover {
+    background-color: #649aeb;
+}
+.ingredients-button.active:hover {
+    background-color: #3282F7;
+}
 
 .appliances-select,  .appliances-button{
     background-color: #68D9A4;
@@ -218,10 +224,22 @@ h1, h2, h3, p {
 .appliances-button .dropdown-input {
     background-color: #39c584;
 }
+.appliances-button:hover {
+    background-color: #39c584;
+}
+.appliances-button.active:hover {
+    background-color: #68D9A4;
+}
 
 .utensiles-select,  .utensiles-button{
     background-color: #ED6454;
 }
 .utensiles-button .dropdown-input {
     background-color: #e67e72;
+}
+.utensiles-button:hover {
+    background-color: #e67e72;
+}
+.utensiles-button.active:hover {
+    background-color: #ED6454;
 }
