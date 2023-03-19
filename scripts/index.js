@@ -4,7 +4,12 @@ import { generateRecipeTemplate } from '../templates/recipeCard.js';
 // DOM Elements
 const buttons = document.querySelectorAll('.button');
 const recipesSection = document.querySelector('.recipes');
-console.log(recipes);
+
+//Add all recipes
+recipes.forEach(recipe => {
+    const recipeCard = generateRecipeTemplate(recipe);
+    recipesSection.insertAdjacentHTML('beforeend', recipeCard);
+})
 
 // Add listeners to the buttons
 buttons.forEach((btn) => {
