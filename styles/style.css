@@ -160,8 +160,14 @@ h3 {
     color: #fff;
 }
 
-.button .icon-container .fa-chevron-up {
+.fa-chevron-up {
     display: none;
+}
+.button.active > .icon-container > .fa-chevron-down {
+    display: none;
+}
+.button.active > .icon-container > .fa-chevron-up {
+    display: initial;
 }
 
 .list-container {
