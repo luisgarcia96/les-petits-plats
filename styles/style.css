@@ -290,12 +290,16 @@ h3 {
 }
 
 .recipe-card-title {
-    flex-grow: 1;
+    margin-right: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .recipe-card-time {
     display: flex;
     align-items: center;
+    min-width: 5.25rem;
 }
 .recipe-card-time i{
     font-size: 1.5rem;

@@ -1,9 +1,13 @@
 import recipes from '../data/recipes.js'
 import { generateRecipeTemplate } from '../templates/recipeCard.js';
+import { generateTagTemplate } from '../templates/tag.js';
 
 // DOM Elements
 const buttons = document.querySelectorAll('.button');
 const recipesSection = document.querySelector('.recipes');
+const tagsSection = document.querySelector('.selected-tags');
+const items = document.querySelectorAll('.item');
+let tags = [];
 
 //Add all recipes
 recipes.forEach(recipe => {
@@ -18,3 +22,33 @@ buttons.forEach((btn) => {
         this.children[1].focus();
     })
 });
+
+//Add items listeners to generate tags
+items.forEach(item => {
+    item.addEventListener('click', function() {
+        const tag = generateTag(this);
+        const closeIcon = tag.querySelector('.icon-container');
+        
+        closeIcon.addEventListener('click', function() {
+            removeTag(tag)
+        })
+
+        tagsSection.appendChild(tag);
+    })
+})
+
+//Helper functions
+function stringToHTML(str) {
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(str, 'text/html');
+	return doc.body.firstChild;
+};
+
+function generateTag(item) {
+    const tag = stringToHTML(generateTagTemplate(item));
+    return tag;
+};
+
+function removeTag(elem) {
+    elem.parentNode.removeChild(elem);
+}
