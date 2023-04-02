@@ -1,4 +1,5 @@
-import recipes from '../data/recipes.js'
+import { getRecipes } from '../controller/search.js';
+
 import { generateRecipeTemplate } from '../templates/recipeCard.js';
 import { generateTagTemplate } from '../templates/tag.js';
 import { isTagAlreadySelected } from './utils/isTagAlreadySelected.js';
@@ -8,9 +9,13 @@ const buttons = document.querySelectorAll('.button');
 const recipesSection = document.querySelector('.recipes');
 const tagsSection = document.querySelector('.selected-tags');
 const items = document.querySelectorAll('.item');
+
+//Search parameters
+let search = '';
 let tags = [];
 
 //Add all recipes
+const recipes = getRecipes(search, tags);
 recipes.forEach(recipe => {
     const recipeCard = generateRecipeTemplate(recipe);
     recipesSection.insertAdjacentHTML('beforeend', recipeCard);
@@ -20,7 +25,11 @@ recipes.forEach(recipe => {
 buttons.forEach((btn) => {
     btn.addEventListener('click', function() {
         this.classList.toggle('active');
-        this.children[1].focus();
+        const inputBar = this.children[1];
+        inputBar.addEventListener('click', (event) => {
+            event.stopPropagation();
+        })
+        inputBar.focus();
     })
 });
 
