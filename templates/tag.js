@@ -1,3 +1,8 @@
+/**
+ * Generates a tag template
+ * @param {*} item 
+ * @returns The tag in the form of a String
+ */
 export function generateTagTemplate(item) {
     const isIngredient = item.classList.contains('item-ingredient');
     const isAppliance = item.classList.contains('item-appliance');

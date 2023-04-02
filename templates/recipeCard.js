@@ -1,3 +1,8 @@
+/**
+ * Generates a Recipe card template
+ * @param {*} recipe 
+ * @returns The recipe template in the form of a String
+ */
 export function generateRecipeTemplate(recipe) {
     
     const {id, name, servings, ingredients, time, description, appliance, utensils} = recipe

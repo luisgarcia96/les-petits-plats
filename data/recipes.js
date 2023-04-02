@@ -5,7 +5,7 @@ const recipes = [
         "servings" : 1,
         "ingredients": [
             {
-                "ingredient" : "Lait de coco",
+                "ingredient" : "Lait de Coco",
                 "quantity" : 400,
                 "unit" : "ml"
             },
@@ -78,7 +78,7 @@ const recipes = [
                 "quantity" : 1          
             },
             {
-                "ingredient": "Lait de coco",
+                "ingredient": "Lait de Coco",
                 "quantity" : 400,
                 "unit" : "ml"
             },
