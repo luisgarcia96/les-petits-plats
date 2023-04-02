@@ -1,7 +1,7 @@
 import recipes from '../data/recipes.js'
 import { generateRecipeTemplate } from '../templates/recipeCard.js';
 import { generateTagTemplate } from '../templates/tag.js';
-import { isTagAlreadySelected } from './utils/isTagDuplicated.js';
+import { isTagAlreadySelected } from './utils/isTagAlreadySelected.js';
 
 // DOM Elements
 const buttons = document.querySelectorAll('.button');
@@ -34,8 +34,9 @@ items.forEach(item => {
             removeTag(tag)
         })
 
-        tagsSection.appendChild(tag);
-        isTagAlreadySelected();
+        if (!isTagAlreadySelected(tag)) {
+            tagsSection.appendChild(tag);
+        }
     })
 })
 
