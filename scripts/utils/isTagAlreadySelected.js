@@ -14,7 +14,6 @@ export function isTagAlreadySelected(tag) {
         const existantTagText = tag.innerText.toLowerCase();
 
         if (newTagInnerText === existantTagText) {
-            console.log('Tag already added');
             isTagAlreadyAdded = true;
         }
     })

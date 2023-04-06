@@ -5,8 +5,9 @@ export function getRecipes(search, tags) {
     //Get all recipes
     let recipesArray = recipes;
 
-    //Get serach string or tags
-
+    //Get search string or tags
+    console.log(search);
+    console.log(tags);
 
     //Data processing
 
