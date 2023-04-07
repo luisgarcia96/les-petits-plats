@@ -159,7 +159,7 @@ export function getRecipes(search, tags) {
     //Data processing
 
 
-    // return recipesArray;
+    return recipesArray;
     // return exampleObject;
-    return [];
+    // return [];
 }
