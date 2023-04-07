@@ -63,11 +63,12 @@ utensilesInput.addEventListener('input', (e) => { //Utensiles input
     createFilters();
 })
 
-//ITEMS THAT MAY REQUIRE A FUNCTION
+
+//Helper functions
 function generateRecipeCards() {
 
     //Get the recipes
-    if (search || tags) {
+    if (search || tags.length > 0) {
         matchedRecipes = getRecipes(search, tags);
     } else {
         matchedRecipes = allRecipes;
@@ -117,7 +118,6 @@ function createFilters() {
     })
 }
 
-//Helper functions
 function stringToHTML(str) {
 	const parser = new DOMParser();
 	const doc = parser.parseFromString(str, 'text/html');
