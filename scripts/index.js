@@ -1,5 +1,4 @@
 import { getRecipes } from '../controller/search.js';
-import recipes from '../data/recipes.js';
 import { generateRecipeTemplate } from '../templates/recipeCard.js';
 import { generateTagTemplate } from '../templates/tag.js';
 import { generateFilters } from './utils/generateFilters.js';
@@ -10,8 +9,9 @@ let search = '';
 let tags = [];
 
 // DOM general common elements
-const recipesSection = document.querySelector('.recipes');
 const tagsSection = document.querySelector('.selected-tags');
+const recipesSection = document.querySelector('.recipes');
+const noRecipesMessage = document.querySelector('.no-recipes-message');
 
 
 //Add listeners
@@ -68,6 +68,11 @@ function addSearchlisteners() {
 function generateRecipeCards() {
     //Get all the recipes
     const recipes = getRecipes(search, tags);
+    if (recipes.length === 0) {
+        noRecipesMessage.classList.add('active');
+    } else {
+        noRecipesMessage.classList.remove('active');
+    }
 
     //Display the filters
     generateFilters(recipes);
