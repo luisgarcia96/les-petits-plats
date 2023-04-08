@@ -23,7 +23,7 @@ export function getRecipes(search, tags) {
         }) 
     }
     
-    //Data processing
+    //Data processing (Algorithm 1)
 
 
 
