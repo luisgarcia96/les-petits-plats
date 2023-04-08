@@ -1,6 +1,6 @@
 import recipes from '../data/recipes.js'
 
-const matchingRecipes = [];
+let matchingRecipes = [];
 const allRecipes = recipes; //Get all recipes
 
 export function getRecipes(search, tags) {
@@ -34,12 +34,34 @@ export function getRecipes(search, tags) {
     //Data processing (Algorithm 2)
 
     //Search by ingredient tag
- 
+    matchingRecipes = allRecipes.filter(recipe => {
+        const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient);
+        return ingredients.every(ingredient => recipeIngredients.includes(ingredient));
+    });
 
     //Search by appliance tag
-
+    if (appliances.length > 0) {
+        matchingRecipes = matchingRecipes.filter(recipe => appliances.includes(recipe.appliance));
+    }
 
     //Search by utensil tag
+    if (utensiles.length > 0) {
+        matchingRecipes = matchingRecipes.filter(recipe => {
+            const recipeUtensils = recipe.ustensils;
+            return utensiles.every(utensil => recipeUtensils.includes(utensil));
+        });
+    }
+
+    //Search by recipe name, description or ingredient name
+    if (search.length > 0) {
+        const searchWords = search.toLowerCase().split(' ');
+        matchingRecipes = matchingRecipes.filter(recipe => {
+            const recipeName = recipe.name.toLowerCase();
+            const recipeDescription = recipe.description.toLowerCase();
+            const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
+            return searchWords.every(word => recipeName.includes(word) || recipeDescription.includes(word) || recipeIngredients.includes(word));
+        });
+    }
 
     return matchingRecipes;
 }
