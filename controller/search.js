@@ -1,8 +1,11 @@
 import recipes from '../data/recipes.js'
 
+const matchingRecipes = [];
+const allRecipes = recipes; //Get all recipes
+
 export function getRecipes(search, tags) {
 
-    let recipesArray = recipes; //Get all recipes
+    matchingRecipes.length = 0;
 
     //Organize tags
     const ingredients = [];
@@ -22,10 +25,21 @@ export function getRecipes(search, tags) {
             }
         }) 
     }
+
+    //Launch search only when user has typed at least 3 characters
+    if (search.length <= 3 && tags.length === 0) {
+        return allRecipes
+    }
     
     //Data processing (Algorithm 1)
 
+    //Search by ingredient tag
+ 
+
+    //Search by appliance tag
 
 
-    return recipesArray;
+    //Search by utensil tag
+
+    return matchingRecipes;
 }

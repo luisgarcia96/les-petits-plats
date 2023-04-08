@@ -42,11 +42,8 @@ buttons.forEach((btn) => {
 const searchBar = document.getElementById('search-input');
 searchBar.addEventListener('input', (e) => {
     search = e.target.value;
-
-    //Launch search only when user has typed at least 3 characters
-    if (search.length >= 3 ) {
-        generateRecipeCards();
-    }
+    generateRecipeCards();
+ 
 })
 
 //Add tags' inputs listeners
