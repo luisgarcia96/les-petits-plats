@@ -5,8 +5,6 @@ const allRecipes = recipes; //Get all recipes
 
 export function getRecipes(search, tags) {
 
-    matchingRecipes.length = 0;
-
     //Organize tags
     const ingredients = [];
     const appliances = [];
@@ -32,86 +30,121 @@ export function getRecipes(search, tags) {
     }
     
     //Data processing (Algorithm 1)
+    const filteredRecipesByIngredient = [];
+    const filteredRecipesByAppliance = [];
+    const filteredRecipesByUtensile = [];
+    const filteredRecipesBySearch = [];
 
-    //Search by ingredient tag
-    matchingRecipes = [];
     for (let i = 0; i < allRecipes.length; i++) {
-    let recipe = allRecipes[i];
-    let recipeIngredients = [];
-    for (let j = 0; j < recipe.ingredients.length; j++) {
-        recipeIngredients.push(recipe.ingredients[j].ingredient.toLowerCase());
-    }
-    let found = true;
-    for (let j = 0; j < ingredients.length; j++) {
-        if (recipeIngredients.indexOf(ingredients[j].toLowerCase()) === -1) {
-        found = false;
-        break;
-        }
-    }
-    if (found) {
-        matchingRecipes.push(recipe);
-    }
-    }
+        const currentRecipe = allRecipes[i]
+        // console.log("currentRecipe:", currentRecipe);
+        
+        //Search by ingredient tag
+        if (ingredients.length > 0) {
 
-    //Search by appliance tag
-    if (appliances.length > 0) {
-    let filteredRecipes = [];
-    for (let i = 0; i < matchingRecipes.length; i++) {
-        let recipe = matchingRecipes[i];
-        if (appliances.indexOf(recipe.appliance.toLowerCase()) !== -1) {
-        filteredRecipes.push(recipe);
-        }
-    }
-    matchingRecipes = filteredRecipes;
-    }
+            for (let j = 0; j < ingredients.length; j++) {
+                const currentTagIngredient = ingredients[j].toLowerCase();
 
-    //Search by utensil tag
-    if (utensiles.length > 0) {
-    let filteredRecipes = [];
-    for (let i = 0; i < matchingRecipes.length; i++) {
-        let recipe = matchingRecipes[i];
-        let recipeUtensils = recipe.ustensils;
-        let found = true;
-        for (let j = 0; j < utensiles.length; j++) {
-        if (recipeUtensils.indexOf(utensiles[j].toLowerCase()) === -1) {
-            found = false;
-            break;
-        }
-        }
-        if (found) {
-        filteredRecipes.push(recipe);
-        }
-    }
-    matchingRecipes = filteredRecipes;
-    }
+                for (let k = 0; k < currentRecipe.ingredients.length; k++) {
+                    const currentRecipeIngredient = currentRecipe.ingredients[k].ingredient.toLowerCase();
 
-    //Search by recipe name, description or ingredient name
-    if (search.length > 0) {
-    let searchWords = search.toLowerCase().split(' ');
-    let filteredRecipes = [];
-    for (let i = 0; i < matchingRecipes.length; i++) {
-        let recipe = matchingRecipes[i];
-        let recipeName = recipe.name.toLowerCase();
-        let recipeDescription = recipe.description.toLowerCase();
-        let recipeIngredients = [];
-        for (let j = 0; j < recipe.ingredients.length; j++) {
-        recipeIngredients.push(recipe.ingredients[j].ingredient.toLowerCase());
+                    if (currentRecipeIngredient === currentTagIngredient) {
+                        filteredRecipesByIngredient.push(currentRecipe);
+                    }
+                }  
+            }
         }
-        let found = true;
-        for (let j = 0; j < searchWords.length; j++) {
-        if (recipeName.indexOf(searchWords[j]) === -1 &&
-            recipeDescription.indexOf(searchWords[j]) === -1 &&
-            recipeIngredients.indexOf(searchWords[j]) === -1) {
-            found = false;
-            break;
+
+        //Search by appliance tag
+        if (appliances.length > 0) {
+            for (let j = 0; j < appliances.length; j++) {
+                const currentTagAppliance = appliances[j].toLocaleLowerCase();
+                const recipeAppliance = currentRecipe.appliance.toLocaleLowerCase();
+
+                if (recipeAppliance === currentTagAppliance) {
+                    filteredRecipesByAppliance.push(currentRecipe);
+                }
+                
+            }
         }
+
+        //Search by utensil tag
+        if (utensiles.length > 0) {
+            for (let j = 0; j < utensiles.length; j++) {
+                const currentTagUtensile = utensiles[j].toLowerCase();
+
+                for (let k = 0; k < currentRecipe.ustensils.length; k++) {
+                    const currentRecipeUtensile = currentRecipe.ustensils[k].toLocaleLowerCase();
+
+                    if (currentRecipeUtensile === currentTagUtensile) {
+                        filteredRecipesByUtensile.push(currentRecipe);
+                    }
+                    
+                }
+                
+            }
         }
-        if (found) {
-        filteredRecipes.push(recipe);
+
+        //Search by recipe name, description or ingredient name
+        if (search.length > 0) {
+            const searchWords = search.toLowerCase().split(' ');
+    
+            const currentRecipeName = currentRecipe.name.toLowerCase();
+            const currentRecipeDescription = currentRecipe.description.toLowerCase();
+
+            const currentRecipeIngredients = []; //TODO Maybe this is optional
+            for (let j = 0; j < currentRecipe.ingredients.length; j++) {
+                currentRecipeIngredients.push(currentRecipe.ingredients[j].ingredient.toLowerCase());
+            }
+
+            let found = true;
+
+            for (let j = 0; j < searchWords.length; j++) {
+                if (currentRecipeName.indexOf(searchWords[j]) === -1 && 
+                    currentRecipeDescription.indexOf(searchWords[j]) === -1 && 
+                    currentRecipeIngredients.indexOf(searchWords[j]) === -1) {
+
+                    found = false;
+                    break;
+                }
+            }
+
+            if (found) {
+                filteredRecipesBySearch.push(currentRecipe);
+            }
         }
     }
-    matchingRecipes = filteredRecipes;
-    }
+    matchingRecipes = getCommonObjects(filteredRecipesByIngredient, filteredRecipesByAppliance, filteredRecipesByUtensile, filteredRecipesBySearch, 'id');
 
     return matchingRecipes;
 }
+
+
+
+//Helper function for search
+function getCommonObjects(array1, array2, array3, array4, propertyName) {
+    const commonObjects = [];
+  
+    if (array1.length === 0 && array2.length === 0 && array3.length === 0 && array4.length === 0) {
+      // If all arrays are empty, return an empty array
+      return commonObjects;
+    } else if (array1.length === 0) {
+      // If array1 is empty, return the first non-empty array
+      return array2.length > 0 ? array2 : array3.length > 0 ? array3 : array4;
+    }
+  
+    // Use array1 as the base array to compare against
+    for (let i = 0; i < array1.length; i++) {
+      const currentObject = array1[i];
+  
+      if (
+        (array2.length === 0 || array2.some(obj => obj[propertyName] === currentObject[propertyName])) &&
+        (array3.length === 0 || array3.some(obj => obj[propertyName] === currentObject[propertyName])) &&
+        (array4.length === 0 || array4.some(obj => obj[propertyName] === currentObject[propertyName]))
+      ) {
+        commonObjects.push(currentObject);
+      }
+    }
+  
+    return commonObjects;
+  }
