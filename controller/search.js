@@ -37,7 +37,6 @@ export function getRecipes(search, tags) {
 
     for (let i = 0; i < allRecipes.length; i++) {
         const currentRecipe = allRecipes[i]
-        // console.log("currentRecipe:", currentRecipe);
         
         //Search by ingredient tag
         if (ingredients.length > 0) {
@@ -126,25 +125,64 @@ function getCommonObjects(array1, array2, array3, array4, propertyName) {
     const commonObjects = [];
   
     if (array1.length === 0 && array2.length === 0 && array3.length === 0 && array4.length === 0) {
-      // If all arrays are empty, return an empty array
-      return commonObjects;
+        // If all arrays are empty, return an empty array
+        return commonObjects;
     } else if (array1.length === 0) {
-      // If array1 is empty, return the first non-empty array
-      return array2.length > 0 ? array2 : array3.length > 0 ? array3 : array4;
+        // If array1 is empty, return the first non-empty array
+        return array2.length > 0 ? array2 : array3.length > 0 ? array3 : array4;
     }
   
     // Use array1 as the base array to compare against
     for (let i = 0; i < array1.length; i++) {
-      const currentObject = array1[i];
+        const currentObject = array1[i];
+        let isCommon = true;
   
-      if (
-        (array2.length === 0 || array2.some(obj => obj[propertyName] === currentObject[propertyName])) &&
-        (array3.length === 0 || array3.some(obj => obj[propertyName] === currentObject[propertyName])) &&
-        (array4.length === 0 || array4.some(obj => obj[propertyName] === currentObject[propertyName]))
-      ) {
-        commonObjects.push(currentObject);
-      }
+        if (array2.length > 0) {
+            // Check if currentObject[propertyName] exists in array2
+            let found = false;
+            for (let j = 0; j < array2.length; j++) {
+                if (array2[j][propertyName] === currentObject[propertyName]) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                isCommon = false;
+            }
+        }
+  
+        if (isCommon && array3.length > 0) {
+            // Check if currentObject[propertyName] exists in array3
+            let found = false;
+            for (let j = 0; j < array3.length; j++) {
+                if (array3[j][propertyName] === currentObject[propertyName]) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                isCommon = false;
+            }
+        }
+  
+        if (isCommon && array4.length > 0) {
+            // Check if currentObject[propertyName] exists in array4
+            let found = false;
+            for (let j = 0; j < array4.length; j++) {
+                if (array4[j][propertyName] === currentObject[propertyName]) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                isCommon = false;
+            }
+        }
+  
+        if (isCommon) {
+            commonObjects.push(currentObject);
+        }
     }
   
     return commonObjects;
-  }
+}
