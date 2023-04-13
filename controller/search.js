@@ -12,7 +12,7 @@ export function getRecipes(search, tags) {
 
     if (tags.length > 0) {
         tags.forEach(tag => {
-            const tagText = tag.children[0].innerText;
+            const tagText = tag.children[0].innerText.toLowerCase();
             
             if (tag.classList.contains('ingredient-tag')) {
                 ingredients.push(tagText);
@@ -41,16 +41,41 @@ export function getRecipes(search, tags) {
         //Search by ingredient tag
         if (ingredients.length > 0) {
 
-            for (let j = 0; j < ingredients.length; j++) {
-                const currentTagIngredient = ingredients[j].toLowerCase();
-
-                for (let k = 0; k < currentRecipe.ingredients.length; k++) {
-                    const currentRecipeIngredient = currentRecipe.ingredients[k].ingredient.toLowerCase();
-
-                    if (currentRecipeIngredient === currentTagIngredient) {
-                        filteredRecipesByIngredient.push(currentRecipe);
-                    }
-                }  
+            if (ingredients.length < 2) {
+                for (let j = 0; j < ingredients.length; j++) {
+                    const currentTagIngredient = ingredients[j].toLowerCase();
+    
+                    for (let k = 0; k < currentRecipe.ingredients.length; k++) {
+                        const currentRecipeIngredient = currentRecipe.ingredients[k].ingredient.toLowerCase();
+    
+                        if (currentRecipeIngredient === currentTagIngredient) {
+                            filteredRecipesByIngredient.push(currentRecipe);
+                        }
+                    }  
+                }    
+            } else {
+                let recipeMatchAllTheIngredients = false;
+                const matchedIngredients = [];
+    
+                for (let j = 0; j < ingredients.length; j++) {
+                    const currentTagIngredient = ingredients[j].toLowerCase();
+    
+                    for (let k = 0; k < currentRecipe.ingredients.length; k++) {
+                        const currentRecipeIngredient = currentRecipe.ingredients[k].ingredient.toLowerCase();
+    
+                        if (currentRecipeIngredient === currentTagIngredient) {
+                            matchedIngredients.push(currentRecipeIngredient);
+                        }
+                    }  
+                }
+    
+                //Recipe math all the ingredients?
+                if(ingredients.sort().join(',')=== matchedIngredients.sort().join(',')){
+                    recipeMatchAllTheIngredients = true;
+                }
+                if (recipeMatchAllTheIngredients) {
+                    filteredRecipesByIngredient.push(currentRecipe);
+                }
             }
         }
 
@@ -69,18 +94,41 @@ export function getRecipes(search, tags) {
 
         //Search by utensil tag
         if (utensiles.length > 0) {
-            for (let j = 0; j < utensiles.length; j++) {
-                const currentTagUtensile = utensiles[j].toLowerCase();
 
-                for (let k = 0; k < currentRecipe.ustensils.length; k++) {
-                    const currentRecipeUtensile = currentRecipe.ustensils[k].toLocaleLowerCase();
+            if (utensiles.length < 2) {
+                for (let j = 0; j < utensiles.length; j++) {
+                    const currentTagUtensile = utensiles[j].toLowerCase();
 
-                    if (currentRecipeUtensile === currentTagUtensile) {
-                        filteredRecipesByUtensile.push(currentRecipe);
-                    }
-                    
+                    for (let k = 0; k < currentRecipe.ustensils.length; k++) {
+                        const currentRecipeUtensile = currentRecipe.ustensils[k].toLocaleLowerCase();
+
+                        if (currentRecipeUtensile === currentTagUtensile) {
+                            filteredRecipesByUtensile.push(currentRecipe);
+                        } 
+                    }   
                 }
-                
+            } else {
+                let recipeMatchAllTheUtensiles = false;
+                const matchedUtensiles = [];
+
+                for (let j = 0; j < utensiles.length; j++) {
+                    const currentTagUtensile = utensiles[j].toLowerCase();
+
+                    for (let k = 0; k < currentRecipe.ustensils.length; k++) {
+                        const currentRecipeUtensile = currentRecipe.ustensils[k].toLocaleLowerCase();
+
+                        if (currentRecipeUtensile === currentTagUtensile) {
+                            matchedUtensiles.push(currentRecipeUtensile);
+                        } 
+                    } 
+                }
+                //Recipe match all the utensiles?
+                if(utensiles.sort().join(',')=== matchedUtensiles.sort().join(',')){
+                    recipeMatchAllTheUtensiles = true;
+                }
+                if (recipeMatchAllTheUtensiles) {
+                    filteredRecipesByUtensile.push(currentRecipe);
+                }
             }
         }
 
@@ -91,7 +139,7 @@ export function getRecipes(search, tags) {
             const currentRecipeName = currentRecipe.name.toLowerCase();
             const currentRecipeDescription = currentRecipe.description.toLowerCase();
 
-            const currentRecipeIngredients = []; //TODO Maybe this is optional
+            const currentRecipeIngredients = []; 
             for (let j = 0; j < currentRecipe.ingredients.length; j++) {
                 currentRecipeIngredients.push(currentRecipe.ingredients[j].ingredient.toLowerCase());
             }
