@@ -4,6 +4,7 @@ let matchingRecipes = [];
 const allRecipes = recipes; //Get all recipes
 
 export function getRecipes(search, tags) {
+    let start = performance.now();
 
     matchingRecipes.length = 0;
 
@@ -62,6 +63,9 @@ export function getRecipes(search, tags) {
             return searchWords.every(word => recipeName.includes(word) || recipeDescription.includes(word) || recipeIngredients.includes(word));
         });
     }
+
+    let timeTaken = performance.now() - start;
+    console.log("Total time taken : " + timeTaken + " milliseconds");
 
     return matchingRecipes;
 }
