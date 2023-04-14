@@ -6,7 +6,7 @@ const allRecipes = recipes; //Get all recipes
 export function getRecipes(search, tags) {
     let start = performance.now();
 
-    matchingRecipes.length = 0;
+    matchingRecipes = allRecipes;
 
     //Organize tags
     const ingredients = [];
@@ -35,10 +35,12 @@ export function getRecipes(search, tags) {
     //Data processing (Algorithm 2)
 
     //Search by ingredient tag
-    matchingRecipes = allRecipes.filter(recipe => {
-        const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient);
-        return ingredients.every(ingredient => recipeIngredients.includes(ingredient));
-    });
+    if (ingredients.length > 0) {
+        matchingRecipes = matchingRecipes.filter(recipe => {
+            const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient);
+            return ingredients.every(ingredient => recipeIngredients.includes(ingredient));
+        });
+    }
 
     //Search by appliance tag
     if (appliances.length > 0) {
