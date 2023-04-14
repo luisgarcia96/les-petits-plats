@@ -262,10 +262,12 @@ h3 {
 
 /* Recipes section */
 .recipes {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 390px);
+    grid-gap: 1rem;
     justify-content: space-between;
-    flex-wrap: wrap;
 }
+
 
 /* Recipes cards */
 .recipe-card {
@@ -369,4 +371,76 @@ h3 {
 
 .no-recipes-message.active {
     display: block;
+}
+
+@media only screen and (max-width: 1300px){
+    body {
+        width: 90vw;
+    }
+
+    .selected-tags {
+        flex-wrap: wrap;
+    }
+
+    .tag {
+        margin-bottom: 1rem;
+    }
+
+    .recipes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .recipe-card {
+        height: 24rem;
+        width: 47%;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    body {
+        width: 95vw;
+    }
+
+    .dropdowns-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .dropdown {
+        margin-right: 0rem;
+    }
+    
+    .button {
+
+
+    }
+
+    .recipes {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .recipe-card {
+        height: 24rem;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 580px){
+    .search {
+        margin-bottom: 1rem;
+    }
+
+    .dropdown {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .recipe-card {
+        margin-bottom: 1rem;
+    }
 }
