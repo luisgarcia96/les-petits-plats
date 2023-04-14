@@ -4,6 +4,7 @@ let matchingRecipes = [];
 const allRecipes = recipes; //Get all recipes
 
 export function getRecipes(search, tags) {
+    let start = performance.now();  
 
     //Organize tags
     const ingredients = [];
@@ -163,6 +164,9 @@ export function getRecipes(search, tags) {
     }
     matchingRecipes = getCommonObjects(filteredRecipesByIngredient, filteredRecipesByAppliance, filteredRecipesByUtensile, filteredRecipesBySearch, 'id');
 
+    let timeTaken = performance.now() - start;
+    console.log("Total time taken : " + timeTaken + " milliseconds");
+    
     return matchingRecipes;
 }
 
