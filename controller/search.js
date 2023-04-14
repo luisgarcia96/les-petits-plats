@@ -12,9 +12,10 @@ export function getRecipes(search, tags) {
     const utensiles = [];
 
     if (tags.length > 0) {
-        tags.forEach(tag => {
+        for (let i = 0; i < tags.length; i++) {
+            const tag = tags[i];
             const tagText = tag.children[0].innerText.toLowerCase();
-            
+
             if (tag.classList.contains('ingredient-tag')) {
                 ingredients.push(tagText);
             } else if (tag.classList.contains('appliance-tag')) {
@@ -22,7 +23,7 @@ export function getRecipes(search, tags) {
             } else if (tag.classList.contains('utensile-tag')) {
                 utensiles.push(tagText);
             }
-        }) 
+        }
     }
 
     //Launch search only when user has typed at least 3 characters
@@ -135,32 +136,30 @@ export function getRecipes(search, tags) {
 
         //Search by recipe name, description or ingredient name
         if (search.length > 0) {
-            const searchWords = search.toLowerCase().split(' ');
-    
+            const searchWord = search.toLowerCase(); // Use the entire search string
+        
             const currentRecipeName = currentRecipe.name.toLowerCase();
             const currentRecipeDescription = currentRecipe.description.toLowerCase();
-
-            const currentRecipeIngredients = []; 
+        
+            const currentRecipeIngredients = [];
             for (let j = 0; j < currentRecipe.ingredients.length; j++) {
                 currentRecipeIngredients.push(currentRecipe.ingredients[j].ingredient.toLowerCase());
             }
-
+        
             let found = true;
-
-            for (let j = 0; j < searchWords.length; j++) {
-                if (currentRecipeName.indexOf(searchWords[j]) === -1 && 
-                    currentRecipeDescription.indexOf(searchWords[j]) === -1 && 
-                    currentRecipeIngredients.indexOf(searchWords[j]) === -1) {
-
-                    found = false;
-                    break;
-                }
+        
+            if (currentRecipeName.indexOf(searchWord) === -1 &&
+                currentRecipeDescription.indexOf(searchWord) === -1 &&
+                currentRecipeIngredients.indexOf(searchWord) === -1) {
+        
+                found = false;
             }
-
+        
             if (found) {
                 filteredRecipesBySearch.push(currentRecipe);
             }
         }
+        
     }
     matchingRecipes = getCommonObjects(filteredRecipesByIngredient, filteredRecipesByAppliance, filteredRecipesByUtensile, filteredRecipesBySearch, 'id');
 
