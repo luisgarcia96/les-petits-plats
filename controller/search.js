@@ -158,11 +158,16 @@ export function getRecipes(search, tags) {
             if (found) {
                 filteredRecipesBySearch.push(currentRecipe);
             }
-        }
-        
+        }   
     }
-    matchingRecipes = getCommonObjects(filteredRecipesByIngredient, filteredRecipesByAppliance, filteredRecipesByUtensile, filteredRecipesBySearch, 'id');
 
+    if (search.length > 3 && filteredRecipesBySearch.length === 0) {
+        matchingRecipes = [];
+    } else {
+        matchingRecipes = getCommonObjects(filteredRecipesByIngredient, filteredRecipesByAppliance, filteredRecipesByUtensile, filteredRecipesBySearch, 'id');
+    }
+
+    // Performance mesurement
     let timeTaken = performance.now() - start;
     console.log("Total time taken : " + timeTaken + " milliseconds");
     
@@ -172,68 +177,50 @@ export function getRecipes(search, tags) {
 
 
 //Helper function for search
-function getCommonObjects(array1, array2, array3, array4, propertyName) {
+function getCommonObjects() {
     const commonObjects = [];
+    const nonEmptyArrays = [];
+
+    for (let i = 0; i < arguments.length - 1; i++) {
+        const arr = arguments[i];
+        if (arr.length > 0) {
+          nonEmptyArrays.push(arr);
+        }
+      }
   
-    if (array1.length === 0 && array2.length === 0 && array3.length === 0 && array4.length === 0) {
-        // If all arrays are empty, return an empty array
-        return commonObjects;
-    } else if (array1.length === 0) {
-        // If array1 is empty, return the first non-empty array
-        return array2.length > 0 ? array2 : array3.length > 0 ? array3 : array4;
+    if (nonEmptyArrays.length === 0) {
+      // If all arrays are empty, return an empty array
+      return commonObjects;
     }
   
-    // Use array1 as the base array to compare against
-    for (let i = 0; i < array1.length; i++) {
-        const currentObject = array1[i];
-        let isCommon = true;
+    const baseArray = nonEmptyArrays[0];
   
-        if (array2.length > 0) {
-            // Check if currentObject[propertyName] exists in array2
-            let found = false;
-            for (let j = 0; j < array2.length; j++) {
-                if (array2[j][propertyName] === currentObject[propertyName]) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                isCommon = false;
-            }
+    for (let i = 0; i < baseArray.length; i++) {
+      const currentObject = baseArray[i];
+      let isCommon = true;
+  
+      for (let j = 1; j < nonEmptyArrays.length; j++) {
+        const currentArray = nonEmptyArrays[j];
+        let found = false;
+  
+        for (let k = 0; k < currentArray.length; k++) {
+          if (currentArray[k]['id'] === currentObject['id']) {
+            found = true;
+            break;
+          }
         }
   
-        if (isCommon && array3.length > 0) {
-            // Check if currentObject[propertyName] exists in array3
-            let found = false;
-            for (let j = 0; j < array3.length; j++) {
-                if (array3[j][propertyName] === currentObject[propertyName]) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                isCommon = false;
-            }
+        if (!found) {
+          isCommon = false;
+          break;
         }
+      }
   
-        if (isCommon && array4.length > 0) {
-            // Check if currentObject[propertyName] exists in array4
-            let found = false;
-            for (let j = 0; j < array4.length; j++) {
-                if (array4[j][propertyName] === currentObject[propertyName]) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                isCommon = false;
-            }
-        }
-  
-        if (isCommon) {
-            commonObjects.push(currentObject);
-        }
+      if (isCommon) {
+        commonObjects.push(currentObject);
+      }
     }
   
     return commonObjects;
-}
+  }
+  
